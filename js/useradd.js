@@ -1,4 +1,36 @@
 $(function() {
+
+    let userId = null;
+    // console.dir(window.location.href);
+    let params = window.location.href.queryURLParams();
+    // console.log(params);
+    if (params.hasOwnProperty("id")) {
+        userId = params.id;
+        //根据ID获取用户信息，实现数据的回显
+        getBaseInfo();
+    }
+
+    async function getBaseInfo() {
+        let result = await axios.get("/user/info", {
+            params: { userId }
+        })
+        if (result.code === 0) {
+            //给表单塞数据，实现表单数据回显
+            result = result.data;
+            $(".username").val(result.name);
+            result.sex == 0 ? $("#man").prop('checked', true) : $("#woman").prop('checked', true);
+            $(".useremail").val(result.email);
+            $(".userphone").val(result.phone);
+            $(".userdepartment").val(result.departmentId);
+            $(".userjob").val(result.jobId);
+            $(".userdesc").val(result.desc);
+            return;
+        }
+        alert("编辑不成功，可能是网络不给了...");
+        userId = null;
+    }
+
+    //初始化部门和职务数据
     initDeptAndJob();
 
     async function initDeptAndJob() {
@@ -23,7 +55,7 @@ $(function() {
             $(".userjob").html(str);
         }
     };
-
+    //校验函数
     function checkname() {
         let val = $(".username").val().trim();
         if (val.length === 0) {
@@ -65,34 +97,6 @@ $(function() {
         $(".spanuserphone").html("");
         return true;
     };
-
-    $(".submit").click(async function() {
-        if (!checkname() || !checkemail() || !checkphone()) {
-            alert("你填写的数据不合法");
-            return;
-        };
-        //校验通过 获取用户输入信息
-        let params = {
-            name: $(".username").val().trim(),
-            //prop() 方法设置或返回被选元素的属性和值。
-            //这里返回checked的值，值为0或1
-            sex: $("#man").prop("checked") ? 0 : 1,
-            email: $(".useremail").val().trim(),
-            phone: $(".userphone").val().trim(),
-            departmentId: $(".userdepartment").val(),
-            jobId: $(".userjob").val(),
-            desc: $(".userdesc").val().trim(),
-        };
-        // console.log(params);
-        //实现新增
-        let result = await axios.post("/user/add", params)
-        if (result.code === 0) {
-            alert("添加员工成功~");
-            window.location.href = "userlist.html";
-            return;
-        }
-    });
-
     //失去焦点时对数据进行校验
     $(".username").blur(function() {
         let val = $(".username").val().trim();
@@ -132,5 +136,46 @@ $(function() {
         }
         $(".spanuserphone").html("");
         return;
+    });
+
+    $(".submit").click(async function() {
+        if (!checkname() || !checkemail() || !checkphone()) {
+            alert("你填写的数据不合法");
+            return;
+        };
+        //校验通过 获取用户输入信息
+        let params = {
+            name: $(".username").val().trim(),
+            //prop() 方法设置或返回被选元素的属性和值。
+            //这里返回checked的值，值为0或1
+            sex: $("#man").prop("checked") ? 0 : 1,
+            email: $(".useremail").val().trim(),
+            phone: $(".userphone").val().trim(),
+            departmentId: $(".userdepartment").val(),
+            jobId: $(".userjob").val(),
+            desc: $(".userdesc").val().trim(),
+        };
+        //判断是编辑还是新增
+        if (userId) {
+            //编辑
+            params.userId = userId;
+            let result = await axios.post("/user/update", params);
+            if (result.code === 0) {
+                alert("修改数据成功");
+                window.location.href = "userlist.html";
+                return;
+            }
+            alert("网络不给力,请稍后再试")
+            return;
+        }
+
+        // console.log(params);
+        //实现新增
+        let result = await axios.post("/user/add", params)
+        if (result.code === 0) {
+            alert("添加员工成功~");
+            window.location.href = "userlist.html";
+            return;
+        }
     });
 })

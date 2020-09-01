@@ -1,0 +1,29 @@
+[33mcommit 4c590d25d307fa4e405fa62b64ada3c99c4ce86c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;32muser[m[33m)[m
+Author: kebukeyi1998 <1449168693@qq.com>
+Date:   Mon Aug 31 21:06:14 2020 +0800
+
+    员工添加与显示
+
+[33mcommit c940dfb55cd62edd978bb128b705ad4ee3966f2c[m
+Author: kebukeyi1998 <1449168693@qq.com>
+Date:   Mon Aug 31 14:58:26 2020 +0800
+
+    渲染权限菜单
+
+[33mcommit 9c16d9e871d8b570b973f36bcb393969a6b318ca[m
+Author: kebukeyi1998 <1449168693@qq.com>
+Date:   Mon Aug 31 14:05:45 2020 +0800
+
+    用户信息实现
+
+[33mcommit 166f4076ecf4d5e2968f598ddc8fd23e038471cf[m[33m ([m[1;32mlogin[m[33m)[m
+Author: kebukeyi1998 <1449168693@qq.com>
+Date:   Fri Aug 28 14:53:14 2020 +0800
+
+    完成登录页面
+
+[33mcommit c8f1a2de092ae5ef87e71dae6fe69e0482e2c491[m
+Author: kebukeyi1998 <1449168693@qq.com>
+Date:   Fri Aug 28 14:03:23 2020 +0800
+
+    初始化项目
